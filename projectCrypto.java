@@ -3,10 +3,12 @@ import java.util.*;
 public class projectCrypto {
     public static void main(String[] args){
         String text = collectString();
+        int shift = collectShift();
+        int groupSize = collectGroupSize();
         String normalizedText = normalizeText(text);
         String obifiedString = obify(normalizedText);
-        String caesarifiedText = caesarify(obifiedString, 2);
-        groupify(caesarifiedText, 4);
+        String caesarifiedText = caesarify(obifiedString, shift);
+        groupify(caesarifiedText, groupSize);
     }
     public static String collectString(){
         Scanner input = new Scanner(System.in);
@@ -14,12 +16,28 @@ public class projectCrypto {
         String text = input.nextLine();
         return text;
     }
+
+    public static int collectShift(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("How many letters do you want to shift by? ");
+        int shift = input.nextInt();
+        return shift;
+    }
+
+    public static int collectGroupSize(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("How many characters do you want the result to be grouped by? ");
+        int groupSize = input.nextInt();
+        return groupSize;
+    }
+
     public static String normalizeText(String text){
         text = text.replace(" ", "");
         text = text.replaceAll("\\p{Punct}","");
         String normalizedText = text.toUpperCase();
         return normalizedText;
     }
+
     public static String obify(String normalizedText){
         StringBuilder obifiedString = new StringBuilder(100);
         for (int i = 0; i < normalizedText.length(); i++){
@@ -30,6 +48,7 @@ public class projectCrypto {
         }
         return obifiedString.toString();
     }
+
     public static String caesarify(String obifiedString, int shift) {
         String alphabet = shiftAlphabet(0);
         String shiftedAlphabet = shiftAlphabet(shift);
