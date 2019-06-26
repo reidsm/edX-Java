@@ -2,11 +2,24 @@ import java.util.*;
 public class mazeRunner {
     static Maze myMap = new Maze();
     public static void main(String[] args){
+        int n = 0;
         intro();
         while (!myMap.didIWin()) {
                 userMove();
+                n = n + 1;
             if (myMap.didIWin()){
                 System.out.println("Congratulations! You made it out alive.");
+            } else if (n == 5){
+                System.out.println("You've made 5 moves, 95 to go until the maze closes");
+            } else if (n == 10){
+                System.out.println("You've made 10 moves, 90 to go until the maze closes");
+            } else if (n == 75){
+                System.out.println("You've made 75 moves, 25 to go until the maze closes");
+            } else if (n == 90){
+                System.out.println("You've made 90 moves, 10 to go until the maze closes");
+            } else if (n == 100){
+                System.out.println("GET REKT SCRUB");
+                System.exit(0);
             }
         }
     }
