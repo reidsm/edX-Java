@@ -41,8 +41,10 @@ public class Fraction {
     }
 
     public Fraction add(Fraction secondFraction){
-        int newNumerator = this.numerator + secondFraction.numerator;
-        int newDenominator = this.denominator;
+        int firstConvertedNumerator = this.denominator * secondFraction.numerator;
+        int secondConvertedNumerator = this.numerator * secondFraction.denominator;
+        int newNumerator = firstConvertedNumerator + secondConvertedNumerator;
+        int newDenominator = this.denominator * secondFraction.denominator;
         Fraction newFraction = new Fraction(newNumerator, newDenominator);
         return newFraction;
     }
