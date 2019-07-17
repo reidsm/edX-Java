@@ -1,66 +1,85 @@
 import java.util.*;
 public class Main {
-    public static void main(String args[]){
-        Fraction fraction1 = validFraction();
-        Fraction fraction2 = validFraction();
-        System.out.println(fraction1);
-        System.out.println(fraction2);
+    public static void main(String args[]) {
+        //char operation = getOperation();
+        String firstFractionString = input();
+        String secondFractionString = input();
+        Fraction firstFraction = getFraction(firstFractionString);
+        Fraction secondFraction = getFraction(secondFractionString);
+        //Fraction newFraction = firstFraction.add(secondFraction);
+        //System.out.println(newFraction);
+        System.out.println(firstFraction);
+        System.out.println(secondFraction);
     }
 
-    public static Fraction validFraction(){
+    public static char getOperation(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter your fraction");
+        String operation = input.next();
+        if(operation.equals('+')){
+            return '+';
+        }return '+';
+    }
+
+    public static String input(){
         Scanner input = new Scanner(System.in);
         System.out.println("Enter your fraction");
         String userFraction = input.nextLine();
+        if (!(validFraction(userFraction))){
+            System.out.print("That's not a valid fraction.");
+            userFraction = input();
+        }return userFraction;
+    }
+
+    public static boolean validFraction(String userFraction){
         if(userFraction.matches(".*[a-zA-Z]+.*")){
-            System.out.print("That's not a valid fraction.");
-            validFraction();
-        }else if(userFraction.matches("[0-9]+")){
-            validIntegerParser(userFraction);
+            return false;
         }else if(userFraction.contains(Character.toString(' '))){
-            System.out.print("That's not a valid fraction.");
-            validFraction();
-        }else if(userFraction.contains(Character.toString('-'))){
-            if (userFraction.indexOf('-') == 0 && !(userFraction.substring(1).matches("[0-9]+")) && !(Character.getNumericValue(userFraction.charAt(1)) == 0)){
-                validNegativeParser(userFraction);
-            } else if(userFraction.substring(1).matches("[0-9]+")){
-                validNegativeIntegerParser(userFraction);
-            }else if(Character.getNumericValue(userFraction.charAt(1)) == 0){
-                return new Fraction();
-            } else {
-                System.out.println("That is not a valid fraction.");
-            }
-        }else if(userFraction.isEmpty()){
-            return new Fraction();
-        } else if(Character.getNumericValue(userFraction.charAt(0)) == 0){
-            return new Fraction();
+            return false;
+        }else if(userFraction.contains(Character.toString('-')) && !(userFraction.indexOf('-') == 0)){
+            return false;
+        }else if(((userFraction.length()-1) == userFraction.lastIndexOf('0')) && (userFraction.indexOf('/') == userFraction.lastIndexOf('0') - 1)){
+            return false;
+        }else if (userFraction.contains(Character.toString('.'))){
+            return false;
+        }else if (userFraction.contains(Character.toString('?'))){
+            return false;
+        }else if (userFraction.contains(Character.toString('!'))){
+            return false;
+        }else if (userFraction.contains(Character.toString('$'))){
+            return false;
+        }return true;
+    }
+
+    public static Fraction getFraction(String fractionString){
+        if(fractionString.contains(Character.toString('/')) && !(fractionString.contains(Character.toString('0')))){
+            String[] fract = fractionString.split("/");
+            int num = Integer.parseInt(fract[0]);
+            int den = Integer.parseInt(fract[1]);
+            Fraction newFraction = new Fraction(num, den);
+            return newFraction;
+        }else if(fractionString.matches("[0-9]+")){
+            int num = Integer.parseInt(fractionString);
+            Fraction newFraction = new Fraction(num);
+            return newFraction;
+        }else if(fractionString.contains(Character.toString('/')) && (fractionString.indexOf('0') == 0)){
+            Fraction newFraction = new Fraction();
+            return newFraction;
+        }else if((fractionString.indexOf('-') == 0) && (fractionString.substring(1).matches("[0-9]+"))){
+            int num = -(Integer.parseInt(fractionString.substring(1)));
+            Fraction newFraction = new Fraction(num);
+            return newFraction;
+        } else if(fractionString.contains(Character.toString('/')) && (fractionString.contains(Character.toString('0'))) && (fractionString.contains(Character.toString('-')))){
+            String[] fract = fractionString.split("/");
+            int num = Integer.parseInt(fract[0]);
+            int den = Integer.parseInt(fract[1]);
+            Fraction newFraction = new Fraction(num, den);
+            return newFraction;
         } else{
-                validPositiveParser(userFraction);
+            Fraction newFraction = new Fraction();
+            return newFraction;
         }
-        return new Fraction();
-    }
 
-    public static Fraction validNegativeParser(String userFraction){
-        userFraction = userFraction.substring(1);
-        int num = -(Character.getNumericValue(userFraction.charAt(0)));
-        int den = Character.getNumericValue(userFraction.charAt(2));
-        return new Fraction(num, den);
-    }
-
-    public static Fraction validPositiveParser(String userFraction){
-        int num = Character.getNumericValue(userFraction.charAt(0));
-        int den = Character.getNumericValue(userFraction.charAt(2));
-        return new Fraction(num, den);
-    }
-
-    public static Fraction validIntegerParser(String userFraction){
-        int num = Integer.parseInt(userFraction);
-        return new Fraction(num);
-    }
-
-    public static Fraction validNegativeIntegerParser(String userFraction){
-        userFraction = userFraction.substring(1);
-        int num = -(Integer.parseInt(userFraction));
-        return new Fraction(num);
     }
 
 }

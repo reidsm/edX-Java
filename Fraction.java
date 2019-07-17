@@ -3,6 +3,8 @@ public class Fraction {
      private int numerator;
      private int denominator;
 
+
+
     public Fraction(int num, int den){
         this.numerator = num;
         this.denominator = den;
@@ -36,6 +38,13 @@ public class Fraction {
         }else if (this.denominator == 0){
             throw new IllegalArgumentException("You cannot divide by 0.");
         }
+    }
+
+    public Fraction add(Fraction secondFraction){
+        int newNumerator = this.numerator + secondFraction.numerator;
+        int newDenominator = this.denominator;
+        Fraction newFraction = new Fraction(newNumerator, newDenominator);
+        return newFraction;
     }
 
 }
