@@ -2,24 +2,33 @@ import java.util.*;
 public class Main {
     public static void main(String args[]) {
         char operation = getOperation();
-        //System.out.println(operation);
         String firstFractionString = input();
         String secondFractionString = input();
         Fraction firstFraction = getFraction(firstFractionString);
         Fraction secondFraction = getFraction(secondFractionString);
         if(operation == '+'){
             Fraction newFraction = firstFraction.add(secondFraction);
-            System.out.println(newFraction);
+            System.out.println(newFraction.toLowestTerms());
+        }else if(operation == '-'){
+            Fraction newFraction = firstFraction.subtract(secondFraction);
+            System.out.println(newFraction.toLowestTerms());
+        }else if(operation == '*'){
+            Fraction newFraction = firstFraction.multiply(secondFraction);
+            System.out.println(newFraction.toLowestTerms());
+        }else if(operation == '/'){
+            Fraction newFraction = firstFraction.divide(secondFraction);
+            System.out.println(newFraction.toLowestTerms());
+        }else if (operation == '='){
+            System.out.println(firstFraction.equals(secondFraction));
+        }else if (operation == 'q' || operation == 'Q'){
+            System.out.println("Goodbye");
+            System.exit(0);
         }
-        //Fraction newFraction = firstFraction.add(secondFraction);
-        //System.out.println(newFraction);
-        //System.out.println(firstFraction);
-        //System.out.println(secondFraction);
     }
 
     public static char getOperation(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter your operation");
+        System.out.println("Enter your operation: ");
         String operation = input.next();
         if(operation.equals(Character.toString('+'))){
             return '+';
@@ -36,17 +45,17 @@ public class Main {
         }else if(operation.equals(Character.toString('Q'))){
             return 'Q';
         }else{
-            System.out.println("Invalid operation.");
+            System.out.println("Invalid operation. ");
             return getOperation();
         }
     }
 
     public static String input(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter your fraction");
+        System.out.println("Enter your fraction: ");
         String userFraction = input.nextLine();
         if (!(validFraction(userFraction))){
-            System.out.print("That's not a valid fraction.");
+            System.out.print("That's not a valid fraction. ");
             userFraction = input();
         }return userFraction;
     }
