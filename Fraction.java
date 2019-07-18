@@ -41,19 +41,32 @@ public class Fraction {
     public Fraction add(Fraction secondFraction){
         int firstConvertedNumerator = this.denominator * secondFraction.numerator;
         int secondConvertedNumerator = this.numerator * secondFraction.denominator;
-        int newNumerator = firstConvertedNumerator + secondConvertedNumerator;
+        int newNumerator = firstConvertedNumerator - secondConvertedNumerator;
         int newDenominator = this.denominator * secondFraction.denominator;
         Fraction newFraction = new Fraction(newNumerator, newDenominator);
         return newFraction;
     }
 
     public Fraction subtract(Fraction secondFraction){
-        int firstConvertedNumerator = this.denominator * secondFraction.numerator;
-        int secondConvertedNumerator = this.numerator * secondFraction.denominator;
-        int newNumerator = firstConvertedNumerator - secondConvertedNumerator;
+        int firstConvertedNumerator = Math.abs(this.denominator * secondFraction.numerator);
+        int secondConvertedNumerator = Math.abs(this.numerator * secondFraction.denominator);
         int newDenominator = this.denominator * secondFraction.denominator;
-        Fraction newFraction = new Fraction(newNumerator, newDenominator);
-        return newFraction;
+        if(this.numerator < 0 && secondFraction.numerator > 0){
+            int newNumerator = -(firstConvertedNumerator + secondConvertedNumerator);
+            Fraction newFraction = new Fraction(newNumerator, newDenominator);
+            return newFraction;
+        }else if(secondFraction.numerator < 0 && this.numerator > 0){
+            int newNumerator = firstConvertedNumerator + secondConvertedNumerator;
+            Fraction newFraction = new Fraction(newNumerator, newDenominator);
+            return newFraction;
+        }else if((this.numerator < 0) && (secondFraction.numerator < 0)){
+            int newNumerator = -(firstConvertedNumerator) + secondConvertedNumerator;
+            Fraction newFraction = new Fraction(newNumerator, newDenominator);
+            return newFraction;
+        }else {
+            Fraction newFraction = new Fraction();
+            return newFraction;
+        }
     }
 
     public Fraction multiply(Fraction secondFraction){
